@@ -1,0 +1,4 @@
+1 monday-6am 
+college this_is_my_college_events 
+1 monday_6am 
+college This_is_my_college_events 
