@@ -3,4 +3,4 @@ This is a simple project on  Digital note book  developed using C++ language . M
 
 Class used in projects:
 
-update is in process gringringrin
+update is in progress..........
