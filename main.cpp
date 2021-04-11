@@ -41,11 +41,11 @@ public:
         Per_file.open("Personal_info.txt");
         if(!Per_file)
         {
-            cout<<"("<<name<<"notebook"<<")~"<<"V_info-# "<<"No info exists"<<endl;
-            cout<<"("<<name<<"notebook"<<")~"<<"V_info-# "<<"Add info Y/N"<<endl;
-            cout<<"("<<name<<"notebook"<<")~"<<"V_info-# ";
+            cout<<"("<<"notebook"<<")~"<<"V_info-# "<<"No info exists"<<endl;
+            cout<<"("<<"notebook"<<")~"<<"V_info-# "<<"Add info Y/N"<<endl;
+            cout<<"("<<"notebook"<<")~"<<"V_info-# ";
             cin>>choice;
-            if(choice=='Y')
+            if(choice=='Y' | choice=='y')
             {
                 get_info();
             }
@@ -70,6 +70,17 @@ public:
 
 
     }
+    void Delete_perinfo(){
+        ifstream Del_per_file("Personal_info.txt");
+        if(!Del_per_file){
+            cout<<"("<<"notebook"<<")~"<<"D_info-# "<<"File Doesn't Exists"<<endl;
+        }
+        else{
+            remove("Personal_info.txt");
+            cout<<"("<<"notebook"<<")~"<<"V_info-# "<<"Information Deleted sucessfully"<<endl;
+        }
+        
+    }
 
 };
 class Events:public Personal_info{
@@ -81,40 +92,37 @@ class Events:public Personal_info{
     public:
         void add_event(){
             ofstream event;
-
             if(!event){
                 event.open("Event.txt");
-                cout<<"("<<name<<"notebook"<<")~"<<"Events-# "<<"Welcome to Event section"<<endl;
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/ID-# ";
+                cout<<"("<<"notebook"<<")~"<<"Events-# "<<"Welcome to Event section"<<endl;
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/ID-# ";
                 cin>>id;
                 event<<id<<" ";
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/Time-# ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/Time-# ";
                 cin>>Time;
-                event<<Time<<" "<<endl;
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/Name-# ";
+                event<<Time<<" ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/Name-# ";
                 cin>>Name;
                 cin.ignore();
                 event<<Name;
-                cin.ignore();
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/Type-# ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/Type-# ";
                 cin>>Event_detail;
                 cin.ignore();
                 event<<Event_detail<<" ";
-                cin.ignore();
 
                 event.close();
             }else{
                 event.open("Event.txt",ios::app);
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/ID-# ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/ID-# ";
                 cin>>id;
                 event<<id<<" ";
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/Time-# ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/Time-# ";
                 cin>>Time;
                 event<<Time<<" "<<endl;
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/Name ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/Name ";
                 cin>>Name;
                 event<<Name<<" ";
-                cout<<"("<<name<<"notebook"<<")~"<<"Ad_Events/Event_detail-# ";
+                cout<<"("<<"notebook"<<")~"<<"Ad_Events/Event_detail-# ";
                 cin>>Event_detail;
                 event<<Event_detail<<" ";
                 event.close();              
@@ -128,12 +136,12 @@ class Events:public Personal_info{
             ifstream event;
             event.open("Event.txt");
             if(!event){
-                cout<<"("<<name<<"notebook"<<")~"<<"V_Events-# ";
-                cout<<"("<<name<<"notebook"<<")~"<<"No Events found "<<endl;
-                cout<<"("<<name<<"notebook"<<")~"<<"V_Events-# "<<"Add Events Y/N"<<endl;
-                cout<<"("<<name<<"notebook"<<")~"<<"V_Events-# ";
+                cout<<"("<<"notebook"<<")~"<<"V_Events-# ";
+                cout<<"("<<"notebook"<<")~"<<"No Events found "<<endl;
+                cout<<"("<<"notebook"<<")~"<<"V_Events-# "<<"Add Events Y/N"<<endl;
+                cout<<"("<<"notebook"<<")~"<<"V_Events-# ";
                 cin>>options;
-                if(options=='Y'){
+                if(options=='Y'| options=='y'){
                     add_event();
                 }
                 else{
@@ -159,37 +167,34 @@ class Events:public Personal_info{
         void Delete_Events(){
             int find;
             string all_event;
-            cout<<"("<<name<<"notebook"<<")~Delete_Event -# "<<"Date of the event"<<endl;
-            cout<<"("<<name<<"notebook"<<")~Delete_Event -# ";
+            cout<<"("<<"notebook"<<")~Delete_Event -# "<<"Event Id"<<endl;
+            cout<<"("<<"notebook"<<")~Delete_Event -# ";
             cin>>id;
             ifstream event;
             ofstream newevent;
             newevent.open("new_Event.txt");
             event.open("Event.txt");
             if(!event){
-                cout<<"("<<name<<"notebook"<<")~Delete_Event -#"<<"File not found"<<endl;
+                cout<<"("<<"notebook"<<")~Delete_Event -#"<<"File not found"<<endl;
             }else{
                 ofstream newevent;
                 newevent.open("new_Event.txt");
                 ifstream event;
                 event.open("Event.txt");
-                while(event >> id >> Time >> Event_detail >> name){
-                    if(find==id){
-                        newevent<<all_event<<endl;
+                while(event >> id >> Name >> Time >> Event_detail){
+                    if(id!=find){
+                        newevent<<id<<" "<<Name<<" "<<Time<<" "<<Event_detail<<endl;
                     }
                 }
                 event.close();
                 newevent.close();
-                cout<<"("<<name<<"notebook"<<")~Delete_Event -# "<<"Event deleted sucessfully"<<endl;
+                cout<<"("<<"notebook"<<")~Delete_Event -# "<<"Event deleted sucessfully"<<endl;
                 remove("Event.txt");
-                // rename("new_Event.txt","Event.txt");
+                rename("new_Event.txt","Event.txt");
             }
 
         }
         
-
-
-
 
 };
 class Reminder{
@@ -200,32 +205,30 @@ class Reminder{
 
     void Add_Reminder(){
         ofstream reminder;
-        reminder.open("Reminders.txt");
-
             if(!reminder){
                 reminder.open("Reminders.txt");
                 cout<<"("<<"notebook"<<")~"<<"Reminder-# "<<"Welcome to Reminder section"<<endl;
                 cout<<"("<<"notebook"<<")~"<<"Ad_Reminder/Type-# ";
                 cin>>Type;
-                reminder<<"Type "<<Type<<" ";
+                reminder<<Type<<" ";
                 cout<<"("<<"notebook"<<")~"<<"Ad_Reminder/Name-# ";
                 cin>>name;
-                reminder<<"Name "<<name;
+                reminder<<name;
                 cout<<"("<<"notebook"<<")~"<<"Ad_Reminder/Time-# ";
                 cin>>time;
-                reminder<<"Time "<<time<<" "<<endl;
+                reminder<<time<<" "<<endl;
                 reminder.close();
             }else{
-                reminder.open("Event.txt",ios::app);
+                reminder.open("Reminders.txt",ios::app);
                 cout<<"("<<"notebook"<<")~"<<"Ad_Reminder/Type-# ";
                 cin>>Type;
-                reminder<<"Type "<<Type<<" ";
+                reminder<<Type<<" ";
                 cout<<"("<<"notebook"<<")~"<<"Ad_Reminder/Name ";
                 cin>>name;
-                reminder<<"Name "<<name<<" ";
+                reminder<<name<<" ";
                 cout<<"("<<"notebook"<<")~"<<"Ad_Reminder/Time-# ";
                 cin>>time;
-                reminder<<"Time "<<time<<" "<<endl;
+                reminder<<time<<" "<<endl;
                 reminder.close();              
 
             }
@@ -233,14 +236,14 @@ class Reminder{
     void view_Reminder(){
         char options;
         ifstream reminder;
-        reminder.open("Reminder.txt");
+        reminder.open("Reminders.txt");
         if(!reminder){
-            cout<<"("<<name<<"notebook"<<")~"<<"V_Reminder-# ";
-            cout<<"("<<name<<"notebook"<<")~"<<"No Reminders found "<<endl;
-            cout<<"("<<name<<"notebook"<<")~"<<"V_Reminder-# "<<"Add Reminder Y/N"<<endl;
-            cout<<"("<<name<<"notebook"<<")~"<<"V_Reminder-# ";
+            cout<<"("<<"notebook"<<")~"<<"V_Reminder-# ";
+            cout<<"("<<"notebook"<<")~"<<"No Reminders found "<<endl;
+            cout<<"("<<"notebook"<<")~"<<"V_Reminder-# "<<"Add Reminder Y/N"<<endl;
+            cout<<"("<<"notebook"<<")~"<<"V_Reminder-# ";
             cin>>options;
-            if(options='Y'){
+            if(options=='Y' | options=='y'){
                 Add_Reminder();
             }
             else{
@@ -249,11 +252,11 @@ class Reminder{
             }
         }
         else{
-            string reminders;
-            // ifstream event;
-            // event.open("Event.txt");
-            while(getline(reminder,reminders)){
-                cout<<reminders<<endl;
+            while(reminder>>Type>>name>>time){
+                cout<<"Type: "<<Type<<endl;
+                cout<<"Name: "<<name<<endl;
+                cout<<"Time: "<<time<<endl;
+                
             }
             reminder.close();            
             
@@ -308,6 +311,7 @@ public:
         cout<<"\t\t\t"<<setfill('-')<<setw(29)<<"-"<<endl;
         cout<<"\t\t\t"<<"*"<<setfill('-')<<setw(4)<<"-"<<" Add_Personal_info  "<<setw(4)<<"*"<<endl;
         cout<<"\t\t\t"<<"*"<<setfill('-')<<setw(4)<<"-"<<" View_Personal_info "<<setw(4)<<"*"<<endl;
+        cout<<"\t\t\t"<<"*"<<setfill('-')<<setw(4)<<"-"<<" Delete_Per_info    "<<setw(4)<<"*"<<endl;
         cout<<"\t\t\t"<<"*"<<setfill('-')<<setw(4)<<"-"<<"    Add_Reminder    "<<setw(4)<<"*"<<endl;
         cout<<"\t\t\t"<<"*"<<setfill('-')<<setw(4)<<"-"<<"   View_Reminder    "<<setw(4)<<"*"<<endl;
         cout<<"\t\t\t"<<"*"<<setfill('-')<<setw(4)<<"-"<<"  Delete_Reminder   "<<setw(4)<<"*"<<endl;
@@ -320,16 +324,17 @@ public:
         cout<<"\t\t\t"<<"Guide for using Digital notebook"<<endl;
         cout<<"\t\t\t"<<"Ad_info ---for personal_ info "<<endl;
         cout<<"\t\t\t"<<"V_per ---for View_personal_info"<<endl;
+        cout<<"\t\t\t"<<"D_info ---for Deleting personal info"<<endl;
         cout<<"\t\t\t"<<"Ad_Events ---for Add_Events"<<endl;
         cout<<"\t\t\t"<<"V_Events ---for View events"<<endl;
         cout<<"\t\t\t"<<"D_Events ---for Delete events"<<endl;
-        cout<<"\t\t\t"<<"Ad_Special ---for Add_Reminder"<<endl;
-        cout<<"\t\t\t"<<"V_Reminder ---for View_Reminder"<<endl;
-        cout<<"\t\t\t"<<"D_Reminder---for Delete_Reminder"<<endl;
-        cout<<"\t\t\t"<<"Exit ---for Exit"<<endl<<endl<<endl;
+        cout<<"\t\t\t"<<"Ad_rem ---for Add_Reminder"<<endl;
+        cout<<"\t\t\t"<<"V_rem ---for View_Reminder"<<endl;
+        cout<<"\t\t\t"<<"D_rem---for Delete_Reminder"<<endl;
+        cout<<"\t\t\t"<<"Exit/exit ---for Exit"<<endl<<endl<<endl;
         cout<<"("<<"notebook"<<")~"<<"menu-# ";
         cin>>choice;
-        make_decision();
+        make_decision(choice);
     }
     void options()
     {   
@@ -342,25 +347,38 @@ public:
         }else if(option=="Exit"){
         system("clear");
         exit(0);
-        }else if(option=="help"){
+        }
+        else if(option=="help" | option=="h"){
             cout<<"("<<"notebook"<<")~"<<"help-# "<<endl;
             cout<<"\t\t\t"<<"menu --- for return in main menu"<<endl;
-            cout<<"\t\t\t"<<"Exit --- for exit programme"<<endl;
+            cout<<"\t\t\t"<<"Ad_info ---for personal_ info "<<endl;
+            cout<<"\t\t\t"<<"V_per ---for View_personal_info"<<endl;
+            cout<<"\t\t\t"<<"Ad_Events ---for Add_Events"<<endl;
+            cout<<"\t\t\t"<<"V_Events ---for View events"<<endl;
+            cout<<"\t\t\t"<<"D_Events ---for Delete events"<<endl;
+            cout<<"\t\t\t"<<"Ad_rem ---for Add_Reminder"<<endl;
+            cout<<"\t\t\t"<<"V_rem ---for View_Reminder"<<endl;
+            cout<<"\t\t\t"<<"D_rem---for Delete_Reminder"<<endl;
+            cout<<"\t\t\t"<<"Exit/exit --- for exit programme"<<endl;
             options();
-        }else{
-        cout<<"("<<"notebook"<<")~"<<"Next-# "<<"command not found"<<endl;
-        system("echo '\a' ");
-        options();
+        }
+        else if(option=="clear"){
+            system("clear");
+            options();
+        }
+        else{
+            make_decision(option);
+
         }
         
 
     }
-    void make_decision(){
+    void make_decision(string choice){
         
         if(choice=="Ad_info")
         {
             get_info();
-            options();
+            menu();
         }
         else if(choice=="V_info")
         {
@@ -368,6 +386,18 @@ public:
             options();
             
 
+        }
+        else if(choice=="D_info")
+        {
+            string choose;
+            cout<<"("<<"notebook"<<")~"<<"V_info-# "<<"Are you sure you want to Delete Personal info ?"<<endl;
+            cout<<"("<<"notebook"<<")~"<<"V_info-# ";
+            cin>>choose;
+            if(choose=="y" | choose== "Y" | choose== "yes" | choose== "Yes"){
+                Delete_perinfo();
+                options();
+
+            }
         }
         else if(choice =="Ad_Events")
         {
@@ -392,31 +422,39 @@ public:
 
 
         }
-        else if(choice=="Ad_Reminder")
+        else if(choice=="Ad_rem")
         {
+            Add_Reminder();
+            options();
             
 
 
         }
-        else if(choice=="V_Reminder")
+        else if(choice=="V_rem")
         {
-            exit(0);
+            view_Reminder();
+            options();
 
 
         }
-        else if(choice=="E_Reminder")
+        else if(choice=="D_rem")
         {
-            exit(0);
+            delete_reminders();
+            options();
 
 
         }
-        else if(choice=="Exit")
+        else if(choice=="clear"){
+            system("clear");
+            menu();
+        }
+        else if(choice=="Exit" | choice=="exit")
         {
             exit(0);
         }
         else
         {
-            cout<<"("<<"notebook"<<")~"<<"-#\t"<<"Invalid choice"<<endl;
+            cout<<"("<<"notebook"<<")~"<<"-#\t"<<"Command Not found"<<endl;
             sleep(2);
             system("clear");
             menu();
@@ -444,11 +482,18 @@ void Logins::View(){
     username_Au();
 }
 void Logins::username_Au(){
+    ifstream pass;
+    pass.open("password.txt");
+    char au_pass[30];
+    while(!pass.eof()){
+        pass.getline(au_pass,30);
+
+    }
     cout<<"Login/Username-# ";
     cin>>username;
     cout<<"("<<"notebook"<<")~"<<"Login/pwd-# ";
     cin>>password;
-    if(strcmp(username,"Happy")==0 && strcmp(password,"noteb@ok")==0){
+    if(strcmp(username,"Happy")==0 && strcmp(password,au_pass)==0){
         cout<<endl<<endl<<endl;
         cout<<"\t\t\t"<<"                AUTHENTICATING.................."<<endl;
         sleep(2);
